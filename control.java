@@ -1,17 +1,15 @@
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.time.format.DateTimeFormatter;
+
 import java.util.Scanner;
 
 
 public class control {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        LocalDate date = LocalDate.of(2024, Month.APRIL, 10);
 
         System.out.println("Введите данные: (Фамилия Имя Отчество; Дата_Рождения; Номер_Телефона(без +); Пол ():");
 
@@ -34,8 +32,7 @@ public class control {
             char gender = data[5].charAt(0);
 
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.mm.yyyy");
-            String dateNow = dtf.format( LocalDateTime.now() );
-
+            String dateNow = dtf.format(LocalDateTime.now());
 
             if (!birthDate.matches("\\d{2}\\.\\d{2}\\.\\d{4}")) {
                 throw new IllegalArgumentException("Ошибка: Неверный формат даты рождения!");
@@ -45,21 +42,24 @@ public class control {
             int month = Integer.parseInt(dateParts[1]);
             int year = Integer.parseInt(dateParts[2]);
             String[] dateNowParts = dateNow.split("\\.");
-            int dayNow = Integer.parseInt(dateNowParts[0]);
-            int monthNow = Integer.parseInt(dateNowParts[1]);
-            int yeaNow = Integer.parseInt(dateNowParts[2]);
+//            int dayNow = Integer.parseInt(dateNowParts[0]);
+//            int monthNow = Integer.parseInt(dateNowParts[1]);
+            int yearNow = Integer.parseInt(dateNowParts[2]);
 
-            if (day > dayNow) {
-                throw new IllegalArgumentException("Ошибка: Такой день ещё не наступил!");
-            }
-            if (month > monthNow){
-                throw new IllegalArgumentException("Ошибка: Такой месяц ещё не наступил!");
-            }
-            if (year > yeaNow){
+            if (year > yearNow) {
                 throw new IllegalArgumentException("Ошибка: Такой год ещё не наступил!");
             }
-            if (phoneNumber.length() > 10){
-                throw new IllegalArgumentException("Ошибка: Номер телефона должен иметь не более 10 чисел!");
+
+            if (month > 12) {
+                throw new IllegalArgumentException("Ошибка: Такой месяц ещё не наступил!");
+            }
+
+            if (day > 31) {
+                throw new IllegalArgumentException("Ошибка: Такой день ещё не наступил!");
+            }
+
+            if (phoneNumber.length() > 11) {
+                throw new IllegalArgumentException("Ошибка: Номер телефона должен иметь не более 11 чисел!");
             }
 
             if (gender != 'f' && gender != 'm') {
